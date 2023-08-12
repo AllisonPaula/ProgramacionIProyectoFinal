@@ -42,4 +42,3 @@ CREATE TABLE Pago (
     AnioVencimiento VARCHAR(10) NOT NULL,
     FOREIGN KEY (ReservaID) REFERENCES Reserva(ID)
 );
-SELECT *FROM Reserva;
