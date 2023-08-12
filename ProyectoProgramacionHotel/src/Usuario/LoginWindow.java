@@ -147,24 +147,31 @@ public class LoginWindow extends JFrame {
 		btnIngresar = new JButton("Iniciar Sección");
 		
 		btnIngresar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String usuario = textField.getText();
-                String contrasena = new String(passwordField.getPassword());
-                String tipoUsuario = comboBox.getSelectedItem().toString();
+		    public void actionPerformed(ActionEvent e) {
+		        String usuario = textField.getText();
+		        String contrasena = new String(passwordField.getPassword());
+		        String tipoUsuario = comboBox.getSelectedItem().toString();
 
-                if (verificarCredenciales(usuario, contrasena, tipoUsuario)) {
-                    dispose(); // Cierra la ventana actual
-                    EventQueue.invokeLater(new Runnable() {
-                        public void run() {
-        		            	Reservar frame = new Reservar();
-        						frame.setVisible(true);
-                        }
-                    });
-                } else {
-                    JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
+		        if (verificarCredenciales(usuario, contrasena, tipoUsuario)) {
+		            dispose(); // Cierra la ventana actual
+		            EventQueue.invokeLater(new Runnable() {
+		                public void run() {
+		                    if (tipoUsuario.equals("Administrador")) {
+		                        // Open the administrator window
+		                    	ventanaAdministrador frame = new ventanaAdministrador();
+		    					frame.setVisible(true);
+		                    } else if (tipoUsuario.equals("Corriente")) {
+		                        // Open the regular user window
+		                        Reservar reservarWindow = new Reservar();
+		                        reservarWindow.setVisible(true);
+		                    }
+		                }
+		            });
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+		        }
+		    }
+		});
 		
 		btnIngresar.setForeground(new Color(238, 238, 238));
 		btnIngresar.setBackground(new Color(72, 33, 33));
@@ -200,5 +207,6 @@ public class LoginWindow extends JFrame {
             e.printStackTrace();
             return false;
         }
+       
     }
 	}
